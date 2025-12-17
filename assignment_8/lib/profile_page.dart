@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'home_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'widgets/input_field.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -9,6 +11,14 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage>{
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+
+  String name = "";
+  String? errorMsg;
+  String? errorPass;
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -74,129 +84,47 @@ class _ProfilePageState extends State<ProfilePage>{
                             color: const Color.fromARGB(255, 149, 83, 123),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(
-                            Icons.camera_alt,
-                            size: 20,
-                            color: Colors.white,
-                          ),
+                          
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 20),
 
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText:"Full Name",
-                      labelStyle: const TextStyle(
-                        color: Color.fromARGB(255, 149, 83, 123),
-                        fontWeight:FontWeight.bold,
-                      ),
-                      hintText:"Enter your full name",
-                      hintStyle: const TextStyle(
-                        color:Color.fromARGB(150, 149, 83, 123),
-                      ),
-                      prefixIcon:const Icon(
-                        Icons.person_outline,
-                        color: Color.fromARGB(255, 149, 83, 123),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius:BorderRadius.circular(12),
-                        borderSide:const BorderSide(
-                          color: Color.fromARGB(255, 149, 83, 123),
-                          width:2,
-                        ),
-                      ),
-                      focusedBorder:OutlineInputBorder(
-                        borderRadius:BorderRadius.circular(12),
-                        borderSide:const BorderSide(
-                          color: Color.fromARGB(255, 205, 233, 237),
-                          width:3,
-                        ),
-                      ),
-                      filled:true,
-                      fillColor: Colors.white,
-                    ),
+                  InputField(
+                    controller: nameController,
+                    keyboardType: TextInputType.text,
+                    label: "Name",
+                    hint: "Enter Name",
+                    icon: Icons.person,
+                    errorText: errorMsg,
                   ),
-                  const SizedBox(height:15),
+                  SizedBox(height: 20),
 
-                  TextFormField(
-                    decoration:InputDecoration(
-                      labelText:"Email Address",
-                      labelStyle:const TextStyle(
-                        color: Color.fromARGB(255, 149, 83, 123),
-                        fontWeight:FontWeight.bold,
-                      ),
-                      hintText:"Enter your email",
-                      hintStyle:const TextStyle(
-                        color: Color.fromARGB(150, 149, 83, 123),
-                      ),
-                      prefixIcon:const Icon(
-                        Icons.email_outlined,
-                        color: Color.fromARGB(255, 149, 83, 123),
-                      ),
-                      border:OutlineInputBorder(
-                        borderRadius:BorderRadius.circular(12),
-                        borderSide:const BorderSide(
-                          color: Color.fromARGB(255, 149, 83, 123),
-                          width:2,
-                        ),
-                      ),
-                      focusedBorder:OutlineInputBorder(
-                        borderRadius:BorderRadius.circular(12),
-                        borderSide:const BorderSide(
-                          color: Color.fromARGB(255, 205, 233, 237),
-                          width:3,
-                        ),
-                      ),
-                      filled:true,
-                      fillColor: const Color.fromARGB(255, 247, 243, 243),
-                    ),
-                    keyboardType:TextInputType.emailAddress,
+                  InputField(
+                    controller: passController,
+                    keyboardType: TextInputType.visiblePassword,
+                    label: "Password",
+                    hint: "Enter Password",
+                    icon: Icons.lock,
+                    errorText: errorPass,
                   ),
-                  const SizedBox(height: 15),
-
-                  TextFormField(
-                    decoration:InputDecoration(
-                      labelText:"Phone Number",
-                      labelStyle:const TextStyle(
-                        color: Color.fromARGB(255, 149, 83, 123),
-                        fontWeight:FontWeight.bold,
-                      ),
-                      hintText:"Enter your phone number",
-                      hintStyle:const TextStyle(
-                        color: Color.fromARGB(150, 149, 83, 123),
-                      ),
-                      prefixIcon:const Icon(
-                        Icons.phone_outlined,
-                        color: Color.fromARGB(255, 149, 83, 123),
-                      ),
-                      border:OutlineInputBorder(
-                        borderRadius:BorderRadius.circular(12),
-                        borderSide:const BorderSide(
-                          color: Color.fromARGB(255, 149, 83, 123),
-                          width:2,
-                        ),
-                      ),
-                      focusedBorder:OutlineInputBorder(
-                        borderRadius:BorderRadius.circular(12),
-                        borderSide:const BorderSide(
-                          color: Color.fromARGB(255, 205, 233, 237),
-                          width:3,
-                        ),
-                      ),
-                      filled:true,
-                      fillColor: Colors.white,
-                    ),
-                    keyboardType:TextInputType.phone,
-                  ),
-                  const SizedBox(height: 25),
+                  SizedBox(height: 20),
 
                   SizedBox(
                     width:double.infinity,
-                    height:50,
+                    height:40,
                     child:ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                        errorMsg = null;
+                        if (nameController.text.isEmpty) {
+                          errorMsg = "Field is empty";
+                        } else {
+                          name = nameController.text;
+                        }
+                      });
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 149, 83, 123),
                         foregroundColor: const Color.fromARGB(255, 205, 233, 237),
@@ -209,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage>{
                         ),
                       ),
                       child:Text(
-                        "Update Profile",
+                        "Submit",
                         style:GoogleFonts.lobster(
                           fontSize:18,
                           fontWeight:FontWeight.bold,
@@ -217,6 +145,9 @@ class _ProfilePageState extends State<ProfilePage>{
                       ),
                     ),
                   ),
+                  
+
+
                 ],
               ),
             ),
@@ -225,4 +156,6 @@ class _ProfilePageState extends State<ProfilePage>{
       ),
     );
   }
+}
+
 }
