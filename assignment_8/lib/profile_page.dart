@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'widgets/input_field.dart';
+
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -12,13 +11,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage>{
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passController = TextEditingController();
-
-  String name = "";
-  String? errorMsg;
-  String? errorPass;
-
+  
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -91,24 +84,40 @@ class _ProfilePageState extends State<ProfilePage>{
                   ),
                   const SizedBox(height: 20),
 
-                  InputField(
-                    controller: nameController,
-                    keyboardType: TextInputType.text,
-                    label: "Name",
-                    hint: "Enter Name",
-                    icon: Icons.person,
-                    errorText: errorMsg,
+                 TextFormField(
+                    decoration: InputDecoration(
+                      labelText:"Name",
+                      labelStyle: const TextStyle(
+                        color: Color.fromARGB(255, 149, 83, 123),
+                        fontWeight:FontWeight.bold,
+                      ),
+                      hintText:"Enter your name",
+                      hintStyle: const TextStyle(
+                        color:Color.fromARGB(150, 149, 83, 123),
+                      ),
+                      prefixIcon:const Icon(
+                        Icons.person_outline,
+                        color: Color.fromARGB(255, 149, 83, 123),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius:BorderRadius.circular(12),
+                        borderSide:const BorderSide(
+                          color: Color.fromARGB(255, 149, 83, 123),
+                          width:2,
+                        ),
+                      ),
+                      focusedBorder:OutlineInputBorder(
+                        borderRadius:BorderRadius.circular(12),
+                        borderSide:const BorderSide(
+                          color: Color.fromARGB(255, 205, 233, 237),
+                          width:3,
+                        ),
+                      ),
+                      filled:true,
+                      fillColor: Colors.white,
+                    ),
                   ),
-                  SizedBox(height: 20),
 
-                  InputField(
-                    controller: passController,
-                    keyboardType: TextInputType.visiblePassword,
-                    label: "Password",
-                    hint: "Enter Password",
-                    icon: Icons.lock,
-                    errorText: errorPass,
-                  ),
                   SizedBox(height: 20),
 
                   SizedBox(
@@ -145,9 +154,6 @@ class _ProfilePageState extends State<ProfilePage>{
                       ),
                     ),
                   ),
-                  
-
-
                 ],
               ),
             ),
